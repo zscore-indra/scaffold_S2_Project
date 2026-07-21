@@ -1,0 +1,13 @@
+# Virtual environment
+.venv/
+
+# SQLite database (PoC data, not source)
+*.db
+
+# Environment secrets (commit .env.example instead)
+.env
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
