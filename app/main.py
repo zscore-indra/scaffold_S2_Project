@@ -13,6 +13,12 @@ from app.db import init_db  # noqa: E402
 from app.routes import router  # noqa: E402
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    """Create database tables on startup."""
+    init_db()
+    yield
+
 
 app = FastAPI(title="ExpenseFlow API", version="0.1.0", lifespan=lifespan)
 app.include_router(router)
