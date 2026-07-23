@@ -1,0 +1,4 @@
+- Never share API keys or push api keys to github or public repor or in logs or hardcode in the code base
+- Always make sure there is no sensitive data being sent to the server
+- Validate any security breach that could potentially harm the system
+- Data should be protected at any level
