@@ -19,6 +19,10 @@ STATUS_PENDING: str = "pending"
 STATUS_APPROVED: str = "approved"
 STATUS_REJECTED: str = "rejected"
 
+# Base-currency conversion outcomes.
+CONVERSION_CONVERTED: str = "converted"
+CONVERSION_FX_UNAVAILABLE: str = "fx_unavailable"
+
 
 class Expense(Base):
     """A submitted expense and its normalised base-currency value."""
@@ -33,9 +37,15 @@ class Expense(Base):
     currency: Mapped[str] = mapped_column(String(3), nullable=False)
 
     # Amount normalised to base-currency (INR) minor units, computed on write.
-    amount_base_minor: Mapped[int] = mapped_column(Integer, nullable=False)
+    # Null when the FX provider was unreachable (see `conversion_status`).
+    amount_base_minor: Mapped[int | None] = mapped_column(Integer, nullable=True)
     # FX rate used at write time: base-currency units per one source unit.
-    fx_rate: Mapped[float] = mapped_column(Float, nullable=False)
+    # Null when the FX provider was unreachable.
+    fx_rate: Mapped[float | None] = mapped_column(Float, nullable=True)
+    # Whether base-currency normalisation succeeded on write.
+    conversion_status: Mapped[str] = mapped_column(
+        String, nullable=False, default=CONVERSION_CONVERTED
+    )
 
     status: Mapped[str] = mapped_column(String, nullable=False, default=STATUS_PENDING)
     created_at: Mapped[datetime] = mapped_column(

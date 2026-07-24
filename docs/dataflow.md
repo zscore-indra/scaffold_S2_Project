@@ -18,6 +18,7 @@ Single user journey: **submit an expense → convert it to the base currency (IN
 | Serialization | Pydantic v2 (`ExpenseCreate` in, `ExpenseOut` out) |
 | Money | Integer **minor units** (paise/cents) — never float |
 | Base currency | **INR**; every amount is normalised to base **on write** |
+| Auth | `X-API-Key` header required on writes when `API_KEY` is set |
 
 ### External entities & trust boundary
 
@@ -37,7 +38,7 @@ Each source module and the data it owns:
 | `app/db.py` | DB engine & session lifecycle | `engine`, `SessionLocal`, `Base`, `init_db()`, `get_db()` | `DATABASE_URL` | Per-request `Session` (dependency) |
 | `app/models.py` | ORM layer | `Expense` table, status/currency constants | — | Persistent rows |
 | `app/schemas.py` | API contract (validation & serialization) | `ExpenseCreate`, `ExpenseOut` | Raw JSON / ORM objects | Validated DTOs / JSON |
-| `app/routes.py` | Endpoints + business logic | 4 routes, `get_fx_rate()`, `_to_base_minor()`, `_decide()`, `_get_or_404()` | HTTP requests, `Session`, FX rate | `ExpenseOut`, HTTP errors |
+| `app/routes.py` | Endpoints + business logic | expense routes (submit · list · get · approve · reject) + reports route, `get_fx_rate()`, `require_api_key()`, `_to_base_minor()`, `_decide()`, `_get_or_404()` | HTTP requests, `X-API-Key`, `Session`, FX rate | `ExpenseOut`, HTTP errors |
 
 ### Module dependency graph
 

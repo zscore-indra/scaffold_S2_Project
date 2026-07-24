@@ -31,8 +31,9 @@ class ExpenseOut(BaseModel):
     description: str
     amount_minor: int
     currency: str
-    amount_base_minor: int
+    amount_base_minor: int | None
     base_currency: str
-    fx_rate: float
+    fx_rate: float | None
+    conversion_status: str
     status: str
     created_at: datetime

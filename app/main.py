@@ -10,7 +10,7 @@ load_dotenv()
 from fastapi import FastAPI  # noqa: E402  (load env before importing app modules)
 
 from app.db import init_db  # noqa: E402
-from app.routes import router  # noqa: E402
+from app.routes import reports_router, router  # noqa: E402
 
 
 @asynccontextmanager
@@ -22,3 +22,4 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(title="ExpenseFlow API", version="0.1.0", lifespan=lifespan)
 app.include_router(router)
+app.include_router(reports_router)

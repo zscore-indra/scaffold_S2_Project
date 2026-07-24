@@ -2,6 +2,7 @@ fastapi
 uvicorn[standard]
 sqlalchemy
 httpx
+anthropic
 pydantic>=2
 python-dotenv
 pytest

@@ -1,4 +1,6 @@
-- Never share API keys or push api keys to github or public repor or in logs or hardcode in the code base
+- Never share API keys or push api keys to github or public repo or in logs or hardcode in the code base
 - Always make sure there is no sensitive data being sent to the server
 - Validate any security breach that could potentially harm the system
-- Data should be protected at any level
+- Make surr data should be protected at any level
+- Mark the Sevearity Levels and criticality based on Privacy, Security and governance being implemented across the codebase.
+- What should the top two compliance checks for the POC.
